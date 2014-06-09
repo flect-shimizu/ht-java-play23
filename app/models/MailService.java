@@ -2,6 +2,8 @@ package models;
 
 import com.sendgrid.SendGrid;
 import com.sendgrid.SendGridException;
+import models.entities.Account;
+import play.Logger;
 import play.Play;
 
 /**
@@ -15,18 +17,21 @@ public class MailService {
 
 	/**
 	 * 登録完了メール送信
-	 * @param toAddress 送信先アドレス
+	 *
+	 * @param account 登録アカウント
 	 * @return 処理結果 true 成功　false 失敗
 	 */
-	public static boolean sendRegisterdMail(String toAddress)  {
+	public static boolean sendRegisterdMail(Account account) {
+
+		RegisterMail mail = new RegisterMail(account);
+
+		if (SMTP_USERNAME == null || SMTP_USERPASS == null) {
+			mail.debugLog();
+			return true;
+		}
 
 		SendGrid sendgrid = new SendGrid(SMTP_USERNAME, SMTP_USERPASS);
-		SendGrid.Email email = new SendGrid.Email();
-		email.addTo(toAddress);
-		email.setFrom("noreplay@example.com");
-		email.setSubject("登録完了のおしらせ");
-		// TODO 引数をユーザオブジェクトに変えて名前ぐらい本文に載せる
-		email.setText("登録が完了しました。");
+		SendGrid.Email email = mail.getSendGridEmail();
 
 		try {
 			SendGrid.Response response = sendgrid.send(email);
@@ -35,6 +40,41 @@ public class MailService {
 			System.out.println(e);
 			e.printStackTrace();
 			return false;
+		}
+	}
+
+	/**
+	 * 登録完了メール送信
+	 */
+	public static class RegisterMail {
+		private final String from;
+		private final String to;
+		private final String subject;
+		private final String body;
+
+		public RegisterMail(Account account) {
+			to = account.getEmail();
+			from = "noreplay@example.com";
+			subject = "Regstration has been completed";
+			body = "Welcome " + account.getName() + "!!!  Regstration has been completed";
+		}
+
+		public void debugLog() {
+			Logger.info(">>>Email Send");
+			Logger.info("from :\t" + from);
+			Logger.info("to :\t" + to);
+			Logger.info("Subject :\t" + subject);
+			Logger.info("Body :\t" + body);
+			Logger.info("Email>>>");
+		}
+
+		public SendGrid.Email getSendGridEmail() {
+			SendGrid.Email email = new SendGrid.Email();
+			email.addTo(to);
+			email.setFrom(from);
+			email.setSubject(subject);
+			email.setText(body);
+			return email;
 		}
 	}
 }

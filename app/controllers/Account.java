@@ -4,6 +4,8 @@ import java.util.Map;
 import java.util.Optional;
 
 import javax.persistence.EntityExistsException;
+
+import models.MailService;
 import play.db.jpa.Transactional;
 
 import play.*;
@@ -37,10 +39,11 @@ public class Account extends Controller {
 	public static Result doRegister() {
 		Map<String, String[]> params = request().body().asFormUrlEncoded();
 		String[] name = params.get("name");
+		String[] email = params.get("email");
 		String[] password = params.get("password");
 		AccountService as = new AccountService();
 		try {
-			as.register(name[0], password[0]);
+			as.register(name[0], email[0],password[0]);
 			return ok(views.html.Account.doRegister.render());
 		} catch (EntityExistsException e) {
 			return ok(views.html.Account.register.render("Name " + name[0] + " already exists."));

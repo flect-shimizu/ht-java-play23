@@ -27,11 +27,14 @@ public class AccountService {
 		return Optional.ofNullable(account);
 	}
 
-	public void register(String name, String password) throws EntityExistsException {
+	public void register(String name, String email, String password) throws EntityExistsException {
 		Account account = new Account();
 		account.setName(name);
+		account.setEmail(email);
 		String encPassword = Crypto.encryptAES(password);
 		account.setPassword(encPassword);
 		JPA.em().persist(account);
+
+		MailService.sendRegisterdMail(account);
 	}
 }
