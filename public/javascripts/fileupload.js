@@ -7,6 +7,9 @@ UploadService.prototype.upload = function(file) {
 		console.log(decodeURIComponent(data));
 		$.ajax({
 			url: decodeURIComponent(data),
+			headers: {
+				"x-amz-acl": "public-read"
+			},
 			type: 'PUT',
 			processData: false,
 			contentType: false,

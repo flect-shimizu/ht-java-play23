@@ -26,7 +26,8 @@ public class FileUpload extends Controller {
 	public static Result url() {
 		DynamicForm form = Form.form().bindFromRequest(request());
 		String name = form.get("name");
-		Optional<String> url = S3Wrapper.generatePresignedRequestUrl(name, "PUT");
+		String type = form.get("type");
+		Optional<String> url = S3Wrapper.generatePresignedRequestUrl(name, "PUT", type);
 		if(url.isPresent()) {
 			return ok(url.get()).as("text/plain");
 		}
