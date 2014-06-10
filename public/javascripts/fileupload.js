@@ -2,9 +2,18 @@ function UploadService() {
 }
 
 UploadService.prototype.upload = function(file) {
-	var defer = this.getSignedUrl(file);
-	defer.done(function(data) {
-		console.log(data);
+	this.getSignedUrl(file)
+	.done(function(data) {
+		console.log(decodeURIComponent(data));
+		$.ajax({
+			url: decodeURIComponent(data),
+			type: 'PUT',
+			processData: false,
+			contentType: false,
+			data: file
+		}).done(function(msg) {
+			console.log("upload finished." + msg);
+		});
 	});
 }
 
