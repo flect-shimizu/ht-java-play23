@@ -15,3 +15,4 @@ POST    /account/register           controllers.Account.doRegister()
 
 GET     /fileupload/index           controllers.FileUpload.index()
 GET     /fileupload/url             controllers.FileUpload.url()
+POST    /fileupload/upload          controllers.FileUpload.upload()

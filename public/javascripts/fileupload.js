@@ -28,3 +28,27 @@ UploadService.prototype.getSignedUrl = function(file) {
 	});
 	return defer.promise();
 }
+
+// ファイルのアップロード
+function uploadCloudinary(){
+        // FormData の作成
+        var formData = new FormData();
+        var file = $ ( '#upload_file' )[ 0 ].files[ 0 ] ;
+    formData.append('picture', file);
+
+        // FormData を送信
+        $.ajax('/fileupload/upload', {
+            method: 'POST',
+            contentType: false,
+            processData: false,
+            data: formData,
+            dataType: 'json',
+            error: function(data) {
+                console.log('error');
+            },
+            success: function(data) {
+                console.log('success');
+                $("#ajaxform").append('<img src="' + data + '">');
+            }
+        });
+};

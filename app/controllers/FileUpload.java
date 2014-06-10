@@ -1,5 +1,7 @@
 package controllers;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.Map;
 import java.util.Optional;
 
@@ -8,6 +10,7 @@ import play.mvc.*;
 import play.data.Form;
 import play.data.DynamicForm;
 
+import utils.CloudinaryWrapper;
 import views.html.*;
 
 import utils.S3Wrapper;
@@ -26,5 +29,22 @@ public class FileUpload extends Controller {
 			return ok(url.get()).as("text/plain");
 		}
 		return internalServerError();
+	}
+
+	public static Result upload() {
+		Http.MultipartFormData body = request().body().asMultipartFormData();
+		Http.MultipartFormData.FilePart picture = body.getFile("picture");
+		if (picture != null) {
+			File file = picture.getFile();
+			try {
+				String url = CloudinaryWrapper.uplaod(file);
+				response().setContentType("text/html");
+				return ok(url);
+			} catch (IOException e) {
+				return internalServerError();
+			}
+		} else {
+			return internalServerError();
+		}
 	}
 }
