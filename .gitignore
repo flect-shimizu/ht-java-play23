@@ -1,6 +1,7 @@
 logs
 project/project
 project/target
+documents/node_modules
 target
 tmp
 .history

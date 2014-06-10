@@ -1,0 +1,63 @@
+@font-face {
+    font-family: 'Muli';
+    src: url('fonts/Muli.ttf') format('opentype');
+}
+
+.reveal table {
+  margin: auto;
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+.reveal table th {
+  text-align: center;
+  font-weight: bold;
+  color: #B1AFBF;
+  background-color: #464368;
+  padding: 0.2em 0.5em 0.2em 0.5em;
+  border-bottom: 1px solid;
+}
+.reveal table td {
+  text-align: left;
+  padding: 0.2em 0.5em 0.2em 0.5em;
+  border-bottom: 1px solid;
+}
+
+/*フォント小さめのテーブル*/
+.reveal table.small_font th,
+.reveal table.small_font td {
+  font-size: 30px;
+}
+.reveal table tr:last-child td {
+    border-bottom: none;
+}
+
+
+/*********************************************
+ * GLOBAL STYLES
+ *********************************************/
+body {
+  background: #9283a5;
+  background: -moz-radial-gradient(center, circle cover, #c6ccd1 0%, #9283a5 100%);
+  background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%, #c6ccd1), color-stop(100%, #9283a5));
+  background: -webkit-radial-gradient(center, circle cover, #c6ccd1 0%, #9283a5 100%);
+  background: -o-radial-gradient(center, circle cover, #c6ccd1 0%, #9283a5 100%);
+  background: -ms-radial-gradient(center, circle cover, #c6ccd1 0%, #9283a5 100%);
+  background: radial-gradient(center, circle cover, #c6ccd1 0%, #9283a5 100%);
+  background-color: #9283a5; }
+
+.reveal {
+  font-family: "Muli";
+  }
+
+/*********************************************
+ * HEADERS
+ *********************************************/
+.reveal h1,
+.reveal h2,
+.reveal h3,
+.reveal h4,
+.reveal h5,
+.reveal h6 {
+  font-family: "Muli";
+}
