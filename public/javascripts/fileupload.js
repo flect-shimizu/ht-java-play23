@@ -1,7 +1,8 @@
 function UploadService() {
 }
 
-UploadService.prototype.upload = function(file) {
+UploadService.prototype.upload = function(file, elemid) {
+	console.log("upload start");
 	this.getSignedUrl(file)
 	.done(function(data) {
 		console.log(decodeURIComponent(data));
@@ -16,11 +17,14 @@ UploadService.prototype.upload = function(file) {
 			data: file
 		}).done(function(msg) {
 			console.log("upload finished." + msg);
+			var imgUrl = (/(.+)?.+/.exec(data)||[])[1];
+			$('#' + elemid).append('<img src="' + imgUrl + '">');
 		});
 	});
 }
 
 UploadService.prototype.getSignedUrl = function(file) {
+	console.log("start getSignedUrl");
 	var defer = $.Deferred();
 	$.ajax({
 		url: "/fileupload/url",

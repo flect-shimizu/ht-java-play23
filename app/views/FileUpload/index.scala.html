@@ -8,25 +8,26 @@
 				<input type="file" id="upload_file">
 			</div>
 			<div class="form-group">
-				<button class="btn" id="upload_button">send</button>
+				<button class="btn" id="upload_button">send to S3</button>
 				<button class="btn" id="upload_cloudinary">Cloudinary</button>
 			</div>
 		</form>
 		<div class="row" id="image"></div>
 	</div>
 	<script>
-	$ ( function ( ) {
-	$ ( '#upload_button' ).click ( function ( ) {
-	var file = $ ( '#upload_file' )[ 0 ].files[ 0 ] ;
-	if ( file != null ) {
-	var us = new UploadService ( ) ;
-	us.upload ( file ) ;
-	}
-	} ) ;
-	$ ( "#upload_cloudinary" ).click ( function ( ) {
-	uploadCloudinary ( ) ;
-	return false ;
-	} )
-	} ) ;
+	$(function() {
+		$('#upload_button').click(function() {
+			var file = $('#upload_file')[0].files[0];
+			if (file != null) {
+				var us = new UploadService();
+				us.upload(file, 'ajaxform');
+			}
+			return false;
+		});
+		$("#upload_cloudinary").click(function() {
+			uploadCloudinary();
+			return false;
+		});
+	});
 	</script>
 }
