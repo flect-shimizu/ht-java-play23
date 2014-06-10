@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+		<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css">
+		<script src="//code.jquery.com/jquery-2.1.1.min.js"></script>
+		<script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+		<script src="/assets/javascripts/fileupload.js"></script>
+	</head>
+	<body>
+		<div class="container">
+			<input type="file" id="upload_file">
+			<button id="upload_button">send</button>
+		</div>
+	</body>
+	<script>
+		$(function() {
+			$('#upload_button').click(function() {
+				var file = $('#upload_file')[0].files[0];
+				if (file != null) {
+					var us = new UploadService();
+					us.upload(file);
+				}
+			});
+		});
+	</script>
+</html>

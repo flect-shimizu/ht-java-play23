@@ -12,3 +12,6 @@ GET     /account/login              controllers.Account.login()
 POST    /account/login              controllers.Account.doLogin()
 GET     /account/register           controllers.Account.register()
 POST    /account/register           controllers.Account.doRegister()
+
+GET     /fileupload/index           controllers.FileUpload.index()
+GET     /fileupload/url             controllers.FileUpload.url()
