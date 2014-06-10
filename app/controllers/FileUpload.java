@@ -2,10 +2,12 @@ package controllers;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URLEncoder;
 import java.util.Map;
 import java.util.Optional;
 
 import play.*;
+import play.libs.Json;
 import play.mvc.*;
 import play.data.Form;
 import play.data.DynamicForm;
@@ -38,8 +40,7 @@ public class FileUpload extends Controller {
 			File file = picture.getFile();
 			try {
 				String url = CloudinaryWrapper.uplaod(file);
-				response().setContentType("text/html");
-				return ok(url);
+				return ok(Json.toJson(url));
 			} catch (IOException e) {
 				return internalServerError();
 			}

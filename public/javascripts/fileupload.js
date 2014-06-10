@@ -43,12 +43,12 @@ function uploadCloudinary(){
             processData: false,
             data: formData,
             dataType: 'json',
-            error: function(data) {
-                console.log('error');
-            },
             success: function(data) {
                 console.log('success');
-                $("#ajaxform").append('<img src="' + data + '">');
+                $("#image").append('<img src="' + data + '" class="img-thumbnail" width="200px" >');
+            },
+            error: function(data) {
+                console.log('error');
             }
         });
 };

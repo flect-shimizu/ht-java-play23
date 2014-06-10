@@ -1,6 +1,10 @@
 package utils;
 
+import com.amazonaws.services.ec2.model.Route;
 import com.cloudinary.*;
+import controllers.Assets;
+import play.Logger;
+import play.Play;
 
 import java.io.File;
 import java.io.IOException;
@@ -11,14 +15,29 @@ import java.util.Map;
  */
 public class CloudinaryWrapper {
 
+	private static final String CLOUDINARY_URL = Play.application().configuration().getString("CLOUDINARY_URL", "");
+
+	private static Cloudinary cloudinary;
+
+	private static Cloudinary getSingleton(){
+		if (cloudinary == null) {
+			cloudinary = new Cloudinary();
+		}
+		return cloudinary;
+	}
+
 	public static String uplaod(File toUpload) throws IOException {
-		Map config = Cloudinary.asMap(
-				"cloud_name", "hcihq7hbe",
-				"api_key", "916853881888261",
-				"api_secret", "8fbbQ4Xi3S2br_c_xwy7OUQiIfw");
-		Cloudinary cloudinary = new Cloudinary(config);
-		Map uploadResult = cloudinary.uploader().upload(toUpload, config);
+		if (CLOUDINARY_URL.isEmpty()){
+			debugLog(toUpload);
+			return "/assets/images/dummy.svg";
+		}
+		Map uploadResult = getSingleton().uploader().upload(toUpload, cloudinary.emptyMap());
 		return String.valueOf(uploadResult.get("url"));
 	}
 
+	public static void debugLog(File file) {
+		Logger.info(">>>File upload");
+		Logger.info("FileName :\t" + file.getPath());
+		Logger.info("File upload>>>");
+	}
 }
