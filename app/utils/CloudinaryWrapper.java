@@ -15,7 +15,7 @@ import java.util.Map;
  */
 public class CloudinaryWrapper {
 
-	private static final String CLOUDINARY_URL = Play.application().configuration().getString("CLOUDINARY_URL", "");
+	private static final String CLOUDINARY_URL = Play.application().configuration().getString("cloudinary_url", "");
 
 	private static Cloudinary cloudinary;
 

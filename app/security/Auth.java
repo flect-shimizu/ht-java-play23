@@ -15,10 +15,11 @@ public class Auth extends Security.Authenticator {
 
 	public static final String UUID_KEY = "uuid";
 
-	public static void initUUID(Http.Session session) {
+	public static String initUUID(Http.Session session) {
 		String uuid = UUID.randomUUID().toString();
 		CacheService.set(uuid, "session");
 		session.put(UUID_KEY, uuid);
+		return uuid;
 	}
 
 	public static void clearUUID(Http.Session session) {
@@ -33,12 +34,11 @@ public class Auth extends Security.Authenticator {
 	public String getUsername(Http.Context context) {
 		String uuid = context.session().get(UUID_KEY);
 		Logger.info("Cookie UUID : " + uuid);
-		Object session = CacheService.get(uuid);
-		return (session == null) ? null : String.valueOf(session);
+		return uuid;
 	}
 
 	@Override
 	public Result onUnauthorized(Http.Context arg0) {
-		return redirect(controllers.routes.Account.login());
+		return redirect(controllers.routes.Application.index());
 	}
 }

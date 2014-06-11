@@ -4,16 +4,11 @@
 
 # Home page
 GET     /                           controllers.Application.index()
+POST    /login                      controllers.Application.doLogin()
+GET     /register                   controllers.Application.register()
+POST    /register                   controllers.Application.doRegister()
+GET     /inquiry                    controllers.Application.inquiry()
+GET     /logout                     controllers.Application.logout()
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)
-
-GET     /account/login              controllers.Account.login()
-POST    /account/login              controllers.Account.doLogin()
-GET     /account/register           controllers.Account.register()
-POST    /account/register           controllers.Account.doRegister()
-GET     /account/logout             controllers.Account.logout()
-
-GET     /fileupload/index           controllers.FileUpload.index()
-GET     /fileupload/url             controllers.FileUpload.url()
-POST    /fileupload/upload          controllers.FileUpload.upload()

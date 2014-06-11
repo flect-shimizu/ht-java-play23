@@ -46,11 +46,11 @@ body {
     text-align: center;
     border-bottom: 1px solid #e5e5e5;
 }
-.jumbotron .btn {
-    margin-top: 24px;
-    padding: 4px 24px;
-    font-size: 21px;
-}
+/*.jumbotron .btn {*/
+    /*margin-top: 24px;*/
+    /*padding: 4px 24px;*/
+    /*font-size: 21px;*/
+/*}*/
 
 /* Supporting marketing content */
 .marketing {

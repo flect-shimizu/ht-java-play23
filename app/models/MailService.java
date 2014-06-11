@@ -56,7 +56,7 @@ public class MailService {
 			to = account.getEmail();
 			from = "noreplay@example.com";
 			subject = "Regstration has been completed";
-			body = "Welcome " + account.getName() + "!!!  Regstration has been completed";
+			body = "Welcome " + account.getEmail() + "!!!  Regstration has been completed";
 		}
 
 		public void debugLog() {

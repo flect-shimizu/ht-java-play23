@@ -1,16 +1,12 @@
-@(message: String, account: models.entities.Account)
+@(message: String)
 
 @main("Welcome to Play") {
 
-	<div class="container">
-
-	@if(account.getName() == null) {
-		<div>Account not registerd.</div>
-		<a href="/account/register">Please register</a>
-	} else {
-		<div> Welcome @account.getName() !</div>
-		<a href="/account/logout">Logout here</a>
+	@if(!message.isEmpty()) {
+		<p class="bg-warning">@message</p>
 	}
-	</div>
 
+	<div class="jumbotron">
+		<a href="/register"><button type="button" class="btn btn-primary btn-lg">Entry !</button></a>
+	</div>
 }
