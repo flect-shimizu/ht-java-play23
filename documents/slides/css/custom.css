@@ -47,7 +47,8 @@ body {
   background-color: #9283a5; }
 
 .reveal {
-  font-family: "Muli";
+    font-family: "Muli";
+  /*font-family: "Muli";*/
   }
 
 /*********************************************
@@ -59,5 +60,6 @@ body {
 .reveal h4,
 .reveal h5,
 .reveal h6 {
+  color: #0d3349;
   font-family: "Muli";
 }
