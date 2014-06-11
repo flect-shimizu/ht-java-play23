@@ -1,9 +1,0 @@
-@(account: models.entities.Account)
-@main("Do Login") {
-		@if(account.getName() == null) {
-			<p class="bg-warning"> Account not registerd. <a href="/account/register">Please register</a> </p>
-		} else {
-			<p class="bg-success">  Welcome @account.getName() ! </p>
-			<a href="/fileupload/index">File upload</a>
-		}
-}
