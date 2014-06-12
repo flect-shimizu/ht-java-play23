@@ -1,4 +1,4 @@
-@(message: String)
+@(message: String, cloudinary:Map[String,Object])
 
 @main("Register form") {
 	@if(!message.isEmpty()) {
@@ -7,7 +7,7 @@
 	<!-- Jumbotron -->
 	<h2>Entry Form</h2>
 	<div class="jumbotron">
-		<form role="form" class="form-horizontal" action="/register" method="POST" enctype="multipart/form-data">
+		<form role="form" id="entry" class="form-horizontal" action="/register" method="POST">
 			<div class="form-group">
 				<label for="email" class="col-sm-2 control-label">Email</label>
 				<div class="col-sm-10">
@@ -23,7 +23,10 @@
 			<div class="form-group">
 				<label for="file" class="col-sm-2 control-label">File</label>
 				<div class="col-sm-10">
-					<input type="file" id="file"  name="file" placeholder="画像">
+					<input type="hidden" id="url" name="url"/>
+					<input name="file" type="file" id="uploadinput" class="cloudinary-fileupload" data-cloudinary-field="image_upload" data-form-data="" style="display: none;">
+					<p id="preview"></p>
+					<input onclick="$('.cloudinary-fileupload').click();" type="button" stype="pull-right" value="ファイル選択ボタン">
 				</div>
 			</div>
 			<div class="col-sm-offset-2 col-sm-10">
@@ -31,4 +34,26 @@
 			</div>
 		</form>
 	</div>
+	<script>
+		$.cloudinary.config({
+		"api_key":"119733851381494" ,
+		"cloud_name":"hcroyhbzx",
+		"private_cdn": false,
+		"cdn_subdomain": false});
+		var data = {
+		"signature":"@cloudinary.get("signature")",
+		"timestamp":"@cloudinary.get("timestamp")",
+		"api_key":"@cloudinary.get("api_key")"};
+		$('#uploadinput').attr('data-form-data', JSON.stringify(data));
+
+	$(function() {
+		$("#uploadinput").fileupload().bind("cloudinarydone", function (e, data) {
+			$('#preview').html(
+				$.cloudinary.image(data.result.public_id, { format: data.result.format, version: data.result.version, crop: 'fill', width: 200})
+			);
+			$('#url').val(data.result.url);
+			return true;
+		});
+	});
+	</script>
 }

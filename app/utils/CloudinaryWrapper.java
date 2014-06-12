@@ -8,6 +8,7 @@ import play.Play;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -39,5 +40,23 @@ public class CloudinaryWrapper {
 		Logger.info(">>>File upload");
 		Logger.info("FileName :\t" + file.getPath());
 		Logger.info("File upload>>>");
+	}
+
+	public static Map<String,Object> getSignature() {
+		String timestamp=(new Long(System.currentTimeMillis() / 1000L)).toString();
+		Map<String, Object> params = new HashMap<String, Object>();
+		Map options = Cloudinary.asMap("resource_type", "auto");
+		boolean returnError = Cloudinary.asBoolean(options.get("return_error"), false);
+		String apiKey = Cloudinary.asString(options.get("api_key"), getSingleton().getStringConfig("api_key"));
+		if (apiKey == null)
+			throw new IllegalArgumentException("Must supply api_key");
+		String apiSecret = Cloudinary.asString(options.get("api_secret"), getSingleton().getStringConfig("api_secret"));
+		if (apiSecret == null)
+			throw new IllegalArgumentException("Must supply api_secret");
+		params.put("timestamp", timestamp);
+		String expected_signature = getSingleton().apiSignRequest(params, apiSecret);
+		params.put("signature", expected_signature);
+		params.put("api_key", apiKey);
+		return params;
 	}
 }

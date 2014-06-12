@@ -28,7 +28,8 @@ public class Application extends Controller {
     }
 
 	public static Result register() {
-		return ok(entry.render(""));
+		Map<String,Object> cloudinary = CloudinaryWrapper.getSignature();
+		return ok(entry.render("",cloudinary));
 	}
 
 	public static Result logout() {
@@ -40,7 +41,7 @@ public class Application extends Controller {
 	public static Result inquiry() {
 		String uuid = session(Auth.UUID_KEY);
 		Account account = (Account) CacheService.get(uuid);
-		return ok(inquiry.render("You are already entry.",account));
+		return ok(inquiry.render("This is your entry.",account));
 	}
 
 
@@ -64,29 +65,23 @@ public class Application extends Controller {
 	@Transactional
 	public static Result doRegister() {
 
-		Http.MultipartFormData multipartFormData = request().body().asMultipartFormData();
-		Map<String, String[]> params = multipartFormData.asFormUrlEncoded();
+		Map<String, String[]> params = request().body().asFormUrlEncoded();
 
 		String[] email = params.get("email");
 		String[] password = params.get("password");
-
-		Http.MultipartFormData.FilePart picture = multipartFormData.getFile("file");
+		String[] url = params.get("url");
 
 		AccountService as = new AccountService();
+
 		try {
-			String url = "";
-			if (picture != null) {
-				url = CloudinaryWrapper.uplaod(picture.getFile());
-			}
-			Account account = as.register(email[0], password[0], url);
+			Account account = as.register(email[0], password[0], url[0]);
 			String uuid = Auth.initUUID(session());
 			CacheService.set(uuid,account);
 			return redirect(routes.Application.inquiry());
 
 		} catch (EntityExistsException e) {
-			return ok(views.html.entry.render("Name " + email[0] + " already exists."));
-		} catch (IOException e) {
-			return internalServerError();
+			Map<String,Object> cloudinary = CloudinaryWrapper.getSignature();
+			return ok(views.html.entry.render("Name " + email[0] + " already exists.", cloudinary));
 		}
 	}
 }
